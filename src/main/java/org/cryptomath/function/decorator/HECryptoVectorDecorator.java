@@ -7,6 +7,8 @@
 package org.cryptomath.function.decorator;
 
 import java.text.MessageFormat;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.cryptomath.function.HECryptoFunction;
 import org.cryptomath.function.exception.InvalidModeException;
 import org.cryptomath.util.NumberUtil;
@@ -17,6 +19,8 @@ import org.cryptomath.util.NumberUtil;
  */
 public class HECryptoVectorDecorator extends AbstractCryptoVectorDecorator {
 
+    private static final Log logger = LogFactory.getLog(HECryptoVectorDecorator.class);
+    
     public HECryptoVectorDecorator(AbstractCryptoVector vector, DecoratorConfigSpec config) {
 	super(vector, config);
     }

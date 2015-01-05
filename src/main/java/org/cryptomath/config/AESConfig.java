@@ -19,10 +19,8 @@ public class AESConfig {
     private String scheme;
     private int keySize;
     private int ivSize;
-    private final static Log logger = LogFactory.getLog(AESConfig.class);
 
     public String getAlgorithm() {
-	logger.debug(String.format("algorithm::{0}", algorithm));
         return algorithm;
     }
 
@@ -31,7 +29,6 @@ public class AESConfig {
     }
 
     public String getScheme() {
-	logger.debug(String.format("scheme::{0}", scheme));
         return scheme;
     }
 
@@ -40,7 +37,6 @@ public class AESConfig {
     }
 
     public int getKeySize() {
-	logger.debug(String.format("keySize::{0}", keySize));
         return keySize;
     }
 
@@ -49,7 +45,6 @@ public class AESConfig {
     }
 
     public int getIvSize() {
-	logger.debug(String.format("ivSize::{0}", ivSize));
         return ivSize;
     }
 

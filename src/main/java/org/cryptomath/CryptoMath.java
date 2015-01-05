@@ -8,8 +8,6 @@ package org.cryptomath;
 import org.cryptomath.function.exception.CryptoMathException;
 import java.math.BigInteger;
 import java.text.MessageFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cryptomath.function.decorator.AbstractCryptoVector;
@@ -76,10 +74,12 @@ public final class CryptoMath {
 	    EncryptedInteger ea = new EncryptedInteger(kp.getPublicKey());
 	    ea.setCipherVal(new BigInteger(a));
 
-	    logger.info(MessageFormat.format("Multiplying encrypted values", alias));
-	    EncryptedInteger value = ea.multiply(new BigInteger(NumberUtil.absorbFloats(constant)));
+	    logger.info(MessageFormat.format("Multiplying encrypted values {0}", alias));
+	    BigInteger bi = new BigInteger(NumberUtil.absorbFloats(constant));
+	    logger.info(">>>>>"+bi);
+	    ea = ea.multiply(bi);
 
-	    return value.getCipherVal().toString();
+	    return ea.getCipherVal().toString();
 	} catch (KeyGenerationException | BigIntegerClassNotValid ex) {
 	    logger.error("Multiplying given values failed", ex);
 	    throw new CryptoMathException("Multiplying given values failed", ex);
@@ -87,8 +87,9 @@ public final class CryptoMath {
     }
 
     public static String multiplyWithConstantAndGetPlainValue(final String a, final String constant, final String alias) throws CryptoMathException {
-	try {	    
-	    SimpleCryptoVector vector = new SimpleCryptoVector(CryptoMath.multiplyWithConstant(a, constant, alias), DecoratorConfigSpec.DECRYPT_MODE);
+	try {
+	    String encryptedResult = CryptoMath.multiplyWithConstant(a, constant, alias);
+	    SimpleCryptoVector vector = new SimpleCryptoVector(encryptedResult, DecoratorConfigSpec.DECRYPT_MODE);
 	    HECryptoVectorDecorator decorator = new HECryptoVectorDecorator(vector, new DecoratorConfigSpec(DecoratorConfigSpec.DECRYPT_MODE, alias, null, 2));
 	    
 	    return decorator.getValue();

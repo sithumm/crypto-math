@@ -9,6 +9,8 @@ package org.cryptomath.util;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.MessageFormat;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.cryptomath.config.CryptoConfigSpec;
 
 /**
@@ -17,16 +19,21 @@ import org.cryptomath.config.CryptoConfigSpec;
  */
 public class NumberUtil {
     
+    public static final Log logger = LogFactory.getLog(NumberUtil.class);
+    
     public static String absorbFloats(String value) {
         String result;
         if (value.matches("[\\d]*.[\\d]*")) {
-            
+            logger.info("Absorbing floats");
             BigDecimal bd = new BigDecimal(value);
             int f = CryptoConfigSpec.getInstance().getMathConfig().getFractions();
+//	    logger.info("Absorbed value::check" + value);
+//	    logger.info("Absorbed value::check" + bd);
             bd = bd.multiply(new BigDecimal("10").pow(f));
-            
+//            logger.info("Absorbed value::check" + bd);
             String[] tokens = bd.toString().split("\\.");
-            result = tokens[0]; 
+            result = tokens[0];
+	    logger.info("Absorbed value::check" + result);
         } else {
             throw new NumberFormatException(MessageFormat.format("Invalid argument {0}", value));
         }

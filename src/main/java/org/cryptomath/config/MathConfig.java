@@ -23,7 +23,6 @@ public class MathConfig {
      * @return the fractions
      */
     public int getFractions() {
-	logger.info(MessageFormat.format("fractions::{0}", fractions));
         return fractions;
     }
 

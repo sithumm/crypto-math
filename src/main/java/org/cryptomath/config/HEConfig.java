@@ -19,7 +19,6 @@ public class HEConfig {
     private int keySize;
 
     public int getKeySize() {
-	logger.debug(String.format("algorithm::{0}", keySize));
         return keySize;
     }
 
