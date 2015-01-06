@@ -12,4 +12,20 @@ package org.cryptomath.config;
  */
 public class RSAConfig {
     
+    private int keySize;
+
+    /**
+     * @return the keySize
+     */
+    public int getKeySize() {
+	return keySize;
+    }
+
+    /**
+     * @param keySize the keySize to set
+     */
+    public void setKeySize(int keySize) {
+	this.keySize = keySize;
+    }
+    
 }

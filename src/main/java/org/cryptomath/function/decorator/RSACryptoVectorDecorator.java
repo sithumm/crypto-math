@@ -3,13 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.cryptomath.function.decorator;
 
 import java.text.MessageFormat;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.cryptomath.function.HECryptoFunction;
+import org.cryptomath.function.PaillierCryptoFunction;
+import org.cryptomath.function.RSACryptoFunction;
 import org.cryptomath.function.exception.InvalidModeException;
 import org.cryptomath.util.NumberUtil;
 
@@ -17,17 +15,15 @@ import org.cryptomath.util.NumberUtil;
  *
  * @author sithum
  */
-public class HECryptoVectorDecorator extends AbstractCryptoVectorDecorator {
+public class RSACryptoVectorDecorator extends AESCryptoVectorDecorator {
 
-    private static final Log logger = LogFactory.getLog(HECryptoVectorDecorator.class);
-    
-    public HECryptoVectorDecorator(AbstractCryptoVector vector, DecoratorConfigSpec config) {
+    public RSACryptoVectorDecorator(AbstractCryptoVector vector, DecoratorConfigSpec config) {
 	super(vector, config);
     }
 
     @Override
     public String getValue() throws Exception {
-	HECryptoFunction function = new HECryptoFunction();
+	RSACryptoFunction function = new RSACryptoFunction();
 	String message;
 	switch (this.config.getMode()) {
 	    case DecoratorConfigSpec.ENCRYPT_MODE:
@@ -42,5 +38,5 @@ public class HECryptoVectorDecorator extends AbstractCryptoVectorDecorator {
 	}
 	return message;
     }
-    
+
 }

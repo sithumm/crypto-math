@@ -17,7 +17,7 @@ public class CryptoConfigSpec {
     private MathConfig mathConfig;
     private DecoratorConfig decoratorConfig;
     private AESConfig aesConfig;
-    private HEConfig heConfig;
+    private PallierConfig heConfig;
     private RSAConfig rsaConfig;
 
     private static final String CONFIG = "config.properties";
@@ -55,13 +55,14 @@ public class CryptoConfigSpec {
         if (rsaConfig == null) {
             rsaConfig = new RSAConfig();
         }
+	rsaConfig.setKeySize(Integer.parseInt(config.getProperty("crypto.config.rsa.keysize", "128")));
     }
 
     private void loadHEConfig(final Properties config) {
         if (heConfig == null) {
-            heConfig = new HEConfig();
+            heConfig = new PallierConfig();
         }
-        heConfig.setKeySize(Integer.parseInt(config.getProperty("crypto.config.he.keysize", "128")));
+        heConfig.setKeySize(Integer.parseInt(config.getProperty("crypto.config.paillier.keysize", "128")));
     }
 
     private void loadAESConfig(final Properties config) {
@@ -139,14 +140,14 @@ public class CryptoConfigSpec {
     /**
      * @return the heConfig
      */
-    public HEConfig getHeConfig() {
+    public PallierConfig getHeConfig() {
         return heConfig;
     }
 
     /**
      * @param heConfig the heConfig to set
      */
-    public void setHeConfig(HEConfig heConfig) {
+    public void setHeConfig(PallierConfig heConfig) {
         this.heConfig = heConfig;
     }
 

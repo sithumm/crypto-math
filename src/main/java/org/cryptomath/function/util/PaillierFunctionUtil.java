@@ -8,7 +8,7 @@ package org.cryptomath.function.util;
 
 import org.cryptomath.function.exception.KeyGenerationException;
 import org.cryptomath.config.CryptoConfigSpec;
-import org.cryptomath.config.HEConfig;
+import org.cryptomath.config.PallierConfig;
 import org.cryptomath.function.key.CustomKeyPair;
 import org.cryptomath.util.PersistenceKeyStoreIOHandler;
 import thep.paillier.PrivateKey;
@@ -18,11 +18,11 @@ import thep.paillier.PublicKey;
  *
  * @author sithum
  */
-public class HEFunctionUtil implements CryptoFunctionUtil {
+public class PaillierFunctionUtil implements CryptoFunctionUtil {
 
     @Override
     public void generateKeys(String alias) throws KeyGenerationException {
-        HEConfig heConfig = CryptoConfigSpec.getInstance().getHeConfig();
+        PallierConfig heConfig = CryptoConfigSpec.getInstance().getHeConfig();
         PrivateKey privateKey = new PrivateKey(heConfig.getKeySize());
         PublicKey publicKey = privateKey.getPublicKey();
         CustomKeyPair keyPair = new CustomKeyPair(publicKey, privateKey);

@@ -32,6 +32,10 @@
             <artifactId>commons-logging</artifactId>
             <version>1.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.he.rsa</groupId>
+            <artifactId>he-rsa</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

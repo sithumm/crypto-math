@@ -13,9 +13,9 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author sithum
  */
-public class HEConfig {
+public class PallierConfig {
     
-    private final static Log logger = LogFactory.getLog(HEConfig.class);
+    private final static Log logger = LogFactory.getLog(PallierConfig.class);
     private int keySize;
 
     public int getKeySize() {

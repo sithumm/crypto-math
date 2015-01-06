@@ -16,7 +16,7 @@ public class CryptoVectorDecoratorExecutor {
 	DecoratorConfigSpec spec = new DecoratorConfigSpec(DecoratorConfigSpec.ENCRYPT_MODE, "he_key", null, -1);
 	AbstractCryptoVector vector = new SimpleCryptoVector(message, spec.getMode());
 	
-	vector = new HECryptoVectorDecorator(vector, spec);
+	vector = new PaillierCryptoVectorDecorator(vector, spec);
 	System.out.println("vector::he::enc::"+vector.getValue());
 //	spec.setKeyAlias();
 //	spec.setIvAlias("aes_iv_alias");
@@ -29,7 +29,7 @@ public class CryptoVectorDecoratorExecutor {
 	DecoratorConfigSpec spec = new DecoratorConfigSpec(DecoratorConfigSpec.DECRYPT_MODE, "he_key", null, -1);
 	AbstractCryptoVector vector = new SimpleCryptoVector(message, spec.getMode());
 	
-	vector = new HECryptoVectorDecorator(vector, spec);
+	vector = new PaillierCryptoVectorDecorator(vector, spec);
 	return vector.getValue();
     }
     
