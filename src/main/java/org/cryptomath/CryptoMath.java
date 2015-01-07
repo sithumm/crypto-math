@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import org.cryptomath.function.exception.CryptoMathException;
 import java.math.BigInteger;
 import java.text.MessageFormat;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cryptomath.function.decorator.DecoratorConfigSpec;
@@ -113,7 +114,8 @@ public final class CryptoMath {
 	    RSAFunctionUtil util = new RSAFunctionUtil();
 	    KeyPair kp = (KeyPair) util.getKeyPair(alias);
 
-	    return RSAMath.multiply(new BigInteger(a), new BigInteger(b), kp.getPublicKey()).toString();
+	    BigInteger m = RSAMath.multiply(new BigInteger(Base64.decodeBase64(a.getBytes())), new BigInteger(Base64.decodeBase64(b.getBytes())), kp.getPublicKey());
+	    return new String(Base64.encodeBase64(m.toByteArray()));
 	} catch (KeyGenerationException ex) {
 	    logger.error("Multiplying given values failed", ex);
 	    throw new CryptoMathException("Multiplying given values failed", ex);

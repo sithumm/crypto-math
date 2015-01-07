@@ -12,20 +12,29 @@ package org.cryptomath.function.decorator;
  */
 public class CryptoVectorDecoratorExecutor {
     
-    public String encrypt(final String message) throws Exception {
+    public String encryptPaillierAES(final String message) throws Exception {
 	DecoratorConfigSpec spec = new DecoratorConfigSpec(DecoratorConfigSpec.ENCRYPT_MODE, "he_key", null, -1);
 	AbstractCryptoVector vector = new SimpleCryptoVector(message, spec.getMode());
-	
+//	System.out.println("vector::plain::"+vector.getValue());
 	vector = new PaillierCryptoVectorDecorator(vector, spec);
-	System.out.println("vector::he::enc::"+vector.getValue());
-//	spec.setKeyAlias();
-//	spec.setIvAlias("aes_iv_alias");
+//	System.out.println("vector::paillier::enc::"+vector.getValue());
 	vector = new AESCryptoVectorDecorator(vector, new DecoratorConfigSpec(DecoratorConfigSpec.ENCRYPT_MODE, "aes_key", "aes_iv_alias", -1));
 	
 	return vector.getValue();
     }
     
-    public String decryptHE(final String message) throws Exception {
+    public String encryptRSAAES(final String message) throws Exception {
+	DecoratorConfigSpec spec = new DecoratorConfigSpec(DecoratorConfigSpec.ENCRYPT_MODE, "rsa_key", null, -1);
+	AbstractCryptoVector vector = new SimpleCryptoVector(message, spec.getMode());
+//	System.out.println("vector::plain::"+vector.getValue());
+	vector = new RSACryptoVectorDecorator(vector, spec);
+//	System.out.println("vector::paillier::enc::"+vector.getValue());
+	vector = new AESCryptoVectorDecorator(vector, new DecoratorConfigSpec(DecoratorConfigSpec.ENCRYPT_MODE, "aes_key", "aes_iv_alias", -1));
+	
+	return vector.getValue();
+    }
+    
+    public String decryptPaillier(final String message) throws Exception {
 	DecoratorConfigSpec spec = new DecoratorConfigSpec(DecoratorConfigSpec.DECRYPT_MODE, "he_key", null, -1);
 	AbstractCryptoVector vector = new SimpleCryptoVector(message, spec.getMode());
 	
@@ -38,6 +47,22 @@ public class CryptoVectorDecoratorExecutor {
 	AbstractCryptoVector vector = new SimpleCryptoVector(message, spec.getMode());
 	
 	vector = new AESCryptoVectorDecorator(vector, spec);
+	return vector.getValue();
+    }
+    
+    public String decryptRSA(final String message) throws Exception {
+	DecoratorConfigSpec spec = new DecoratorConfigSpec(DecoratorConfigSpec.DECRYPT_MODE, "rsa_key", null, -1);
+	AbstractCryptoVector vector = new SimpleCryptoVector(message, spec.getMode());
+	
+	vector = new RSACryptoVectorDecorator(vector, spec);
+	return vector.getValue();
+    }
+    
+    public String encryptRSA(final String message) throws Exception {
+	DecoratorConfigSpec spec = new DecoratorConfigSpec(DecoratorConfigSpec.ENCRYPT_MODE, "rsa_key", null, -1);
+	AbstractCryptoVector vector = new SimpleCryptoVector(message, spec.getMode());
+	
+	vector = new RSACryptoVectorDecorator(vector, spec);
 	return vector.getValue();
     }
     

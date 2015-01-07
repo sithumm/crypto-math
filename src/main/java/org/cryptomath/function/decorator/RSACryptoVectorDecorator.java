@@ -6,7 +6,6 @@
 package org.cryptomath.function.decorator;
 
 import java.text.MessageFormat;
-import org.cryptomath.function.PaillierCryptoFunction;
 import org.cryptomath.function.RSACryptoFunction;
 import org.cryptomath.function.exception.InvalidModeException;
 import org.cryptomath.util.NumberUtil;
@@ -15,7 +14,7 @@ import org.cryptomath.util.NumberUtil;
  *
  * @author sithum
  */
-public class RSACryptoVectorDecorator extends AESCryptoVectorDecorator {
+public class RSACryptoVectorDecorator extends AbstractCryptoVectorDecorator {
 
     public RSACryptoVectorDecorator(AbstractCryptoVector vector, DecoratorConfigSpec config) {
 	super(vector, config);

@@ -33,7 +33,8 @@ public class NumberUtil {
 //            logger.info("Absorbed value::check" + bd);
 	    String[] tokens = bd.toString().split("\\.");
 	    result = tokens[0];
-	    logger.info("Absorbed value::check" + result);
+//	    result = truncate(value, f).toString();
+	    logger.info("Absorbed value::check::" + result);
 	} else {
 	    throw new NumberFormatException(MessageFormat.format("Invalid argument {0}", value));
 	}
@@ -63,10 +64,10 @@ public class NumberUtil {
 	return NumberUtil.spillFloats(value.toString(), pTimes);
     }
 
-    public static BigDecimal truncate(final String text) {
+    public static BigDecimal truncate(final String text, final int pTimes) {
 	BigDecimal bigDecimal = new BigDecimal(text);
-	if (bigDecimal.scale() > 2) {
-	    bigDecimal = new BigDecimal(text).setScale(2, RoundingMode.HALF_UP);
+	if (bigDecimal.scale() > pTimes) {
+	    bigDecimal = new BigDecimal(text).setScale(pTimes, RoundingMode.HALF_UP);
 	}
 	return bigDecimal.stripTrailingZeros();
     }
@@ -78,7 +79,7 @@ public class NumberUtil {
     }
 
     public static void main(String[] args) {
-	System.out.println(NumberUtil.absorbFloats("0.002343"));
+	System.out.println(NumberUtil.absorbFloats("100.222222224545111245444"));
 	System.out.println(absorbFloats(new BigDecimal(0.002343)));
 	System.out.println(NumberUtil.absorbFloats("1000002343"));
 	System.out.println(absorbFloats(new BigDecimal("1000002343")));

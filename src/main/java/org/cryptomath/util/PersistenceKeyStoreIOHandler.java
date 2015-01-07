@@ -22,7 +22,7 @@ public class PersistenceKeyStoreIOHandler {
 	    .getLogger(PersistenceKeyStoreIOHandler.class.getName());
     public final static String KEY_STORE_NAME = "keystore";
     public final static String KEY_STORE_MAP = "keystore.map";
-    public final static String KEY_STORE_PATH = System.getProperty("user.home") + "/";
+    public final static String KEY_STORE_PATH = System.getProperty("user.home") + "/keystore/";
     private final Map<String, byte[]> ivs = new HashMap<String, byte[]>();
 
     private PersistenceKeyStoreIOHandler() throws KeyStoreException {
