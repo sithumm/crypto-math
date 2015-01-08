@@ -34,7 +34,7 @@ import thep.paillier.exceptions.PublicKeysNotEqualException;
 public final class CryptoMath {
 
     private static final Log logger = LogFactory.getLog(CryptoMath.class);
-    
+
     private static final int MAX_SCALE_FOR_INVERSE = 20;
 
     public static String add(final String a, final String b, final String alias) throws CryptoMathException {
@@ -46,7 +46,7 @@ public final class CryptoMath {
 	    EncryptedInteger ea = new EncryptedInteger(kp.getPublicKey());
 	    ea.setCipherVal(new BigInteger(a));
 	    EncryptedInteger eb = new EncryptedInteger(kp.getPublicKey());
-	    ea.setCipherVal(new BigInteger(b));
+	    eb.setCipherVal(new BigInteger(b));
 	    logger.info("Adding encrypted values");
 	    EncryptedInteger value = ea.add(eb);
 
@@ -173,6 +173,45 @@ public final class CryptoMath {
 	} catch (Exception ex) {
 	    logger.error("Multiplying given values failed", ex);
 	    throw new CryptoMathException("Multiplying given values failed", ex);
+	}
+    }
+
+    public static String subtract(final String a, final String b, final String alias) throws CryptoMathException {
+	try {
+	    logger.info(MessageFormat.format("Retrieving key pair for {0}", alias));
+	    PaillierFunctionUtil util = new PaillierFunctionUtil();
+	    CustomKeyPair kp = (CustomKeyPair) util.getKeyPair(alias);
+
+	    EncryptedInteger ea = new EncryptedInteger(kp.getPublicKey());
+	    ea.setCipherVal(new BigInteger(a));
+	    
+	    EncryptedInteger eb = new EncryptedInteger(kp.getPublicKey());
+	    eb.setCipherVal(new BigInteger(b));
+	    
+	    eb = eb.multiply(BigInteger.ONE.negate());
+	    
+	    logger.info("Adding encrypted values");
+	    EncryptedInteger value = ea.add(eb);
+
+	    return value.getCipherVal().toString();
+	} catch (KeyGenerationException | BigIntegerClassNotValid | PublicKeysNotEqualException ex) {
+	    logger.error("Adding given values failed", ex);
+	    throw new CryptoMathException("Adding given values failed", ex);
+	}
+    }
+    
+    public static String subtractAndGetPlainValue(final String a, final String b, final String alias) throws CryptoMathException {
+	try {
+	    SimpleCryptoVector vector = new SimpleCryptoVector(CryptoMath.subtract(a, b, alias), DecoratorConfigSpec.DECRYPT_MODE);
+	    PaillierCryptoVectorDecorator decorator = new PaillierCryptoVectorDecorator(vector, new DecoratorConfigSpec(DecoratorConfigSpec.DECRYPT_MODE, alias, null, -1));
+
+	    return decorator.getValue();
+	} catch (KeyGenerationException | BigIntegerClassNotValid ex) {
+	    logger.error("Adding given values failed", ex);
+	    throw new CryptoMathException("Adding given values failed", ex);
+	} catch (Exception ex) {
+	    logger.error("Adding given values failed", ex);
+	    throw new CryptoMathException("Adding given values failed", ex);
 	}
     }
 

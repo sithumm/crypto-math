@@ -6,6 +6,7 @@
 package org.cryptomath.config;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.Properties;
 
 /**
@@ -17,7 +18,7 @@ public class CryptoConfigSpec {
     private MathConfig mathConfig;
     private DecoratorConfig decoratorConfig;
     private AESConfig aesConfig;
-    private PallierConfig heConfig;
+    private PaillierConfig paillierConfig;
     private RSAConfig rsaConfig;
 
     private static final String CONFIG = "config.properties";
@@ -44,7 +45,7 @@ public class CryptoConfigSpec {
             loadMathConfig(config);
             loadDecoratorConfig(config);
             loadAESConfig(config);
-            loadHEConfig(config);
+            loadPaillierConfig(config);
             loadRSAConfig(config);
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,14 +56,15 @@ public class CryptoConfigSpec {
         if (rsaConfig == null) {
             rsaConfig = new RSAConfig();
         }
-	rsaConfig.setKeySize(Integer.parseInt(config.getProperty("crypto.config.rsa.keysize", "128")));
+	rsaConfig.setKeySize(Integer.parseInt(config.getProperty("crypto.config.rsa.keysize", "2048")));
     }
 
-    private void loadHEConfig(final Properties config) {
-        if (heConfig == null) {
-            heConfig = new PallierConfig();
+    private void loadPaillierConfig(final Properties config) {
+        if (paillierConfig == null) {
+            paillierConfig = new PaillierConfig();
         }
-        heConfig.setKeySize(Integer.parseInt(config.getProperty("crypto.config.paillier.keysize", "128")));
+        paillierConfig.setKeySize(Integer.parseInt(config.getProperty("crypto.config.paillier.keysize", "2048")));
+	paillierConfig.setThreshold(new BigInteger(config.getProperty("crypto.config.paillier.negative.threshold", "1000000000000000000000000000000000000000")));
     }
 
     private void loadAESConfig(final Properties config) {
@@ -138,17 +140,17 @@ public class CryptoConfigSpec {
     }
 
     /**
-     * @return the heConfig
+     * @return the paillierConfig
      */
-    public PallierConfig getHeConfig() {
-        return heConfig;
+    public PaillierConfig getPaillierConfig() {
+        return paillierConfig;
     }
 
     /**
-     * @param heConfig the heConfig to set
+     * @param paillierConfig the paillierConfig to set
      */
-    public void setHeConfig(PallierConfig heConfig) {
-        this.heConfig = heConfig;
+    public void setPaillierConfig(PaillierConfig paillierConfig) {
+        this.paillierConfig = paillierConfig;
     }
 
     /**

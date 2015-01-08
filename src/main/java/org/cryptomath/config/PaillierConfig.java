@@ -6,6 +6,7 @@
 
 package org.cryptomath.config;
 
+import java.math.BigInteger;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -13,10 +14,11 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author sithum
  */
-public class PallierConfig {
+public class PaillierConfig {
     
-    private final static Log logger = LogFactory.getLog(PallierConfig.class);
+    private final static Log logger = LogFactory.getLog(PaillierConfig.class);
     private int keySize;
+    private BigInteger threshold;
 
     public int getKeySize() {
         return keySize;
@@ -24,6 +26,20 @@ public class PallierConfig {
 
     public void setKeySize(int keySize) {
         this.keySize = keySize;
+    }
+
+    /**
+     * @return the threshold
+     */
+    public BigInteger getThreshold() {
+	return threshold;
+    }
+
+    /**
+     * @param threshold the threshold to set
+     */
+    public void setThreshold(BigInteger threshold) {
+	this.threshold = threshold;
     }
     
 }

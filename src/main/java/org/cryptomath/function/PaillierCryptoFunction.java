@@ -7,6 +7,8 @@
 package org.cryptomath.function;
 
 import java.math.BigInteger;
+import org.cryptomath.config.CryptoConfigSpec;
+import org.cryptomath.config.PaillierConfig;
 import org.cryptomath.function.key.CustomKeyPair;
 import org.cryptomath.function.util.PaillierFunctionUtil;
 import thep.paillier.EncryptedInteger;
@@ -31,7 +33,13 @@ public class PaillierCryptoFunction implements ICryptoFunction{
 	EncryptedInteger ei = new EncryptedInteger(keyPair.getPublicKey());
 	ei.setCipherVal(new BigInteger(message));
 	
-	return ei.decrypt(keyPair.getPrivateKey()).toString();
+	BigInteger ans = ei.decrypt(keyPair.getPrivateKey());
+	PaillierConfig config = CryptoConfigSpec.getInstance().getPaillierConfig();
+	if (ans.compareTo(config.getThreshold()) == 1) {
+	    ans = ans.subtract(keyPair.getPublicKey().getN());
+	}
+	
+	return ans.toString();
     }
     
 }
